@@ -1,0 +1,36 @@
+const express = require('express');
+const mongoose = require('mongoose');
+require('dotenv').config(); // Cargar variables de entorno
+const productRoutes = require('./routes/productRoutes');
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Obtener la URI de MongoDB desde variables de entorno o usar la local por defecto
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/herreria';
+
+// Conexión a MongoDB con manejo de errores
+mongoose.connect(mongoURI)
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch(err => {
+    console.error('Error al conectar a MongoDB:', err);
+    console.log('Continuando sin conexión a la base de datos. Usando datos mock.');
+  });
+
+// Rutas
+app.use('/api', productRoutes);
+
+// Ruta principal
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+// Iniciar el servidor
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
+module.exports = app;
