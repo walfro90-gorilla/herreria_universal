@@ -1,9 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../ui-components/Button';
 import Card from '../ui-components/Card';
 import Container from '../ui-components/Container';
 import { Row, Col } from '../ui-components/Grid';
+
+// Componentes cargados de forma diferida
+const WorkGallery = lazy(() => import('../components/WorkGallery'));
+const HomeFAQSection = lazy(() => import('../components/HomeFAQSection'));
+
+// Componente de fallback para carga diferida
+const LoadingFallback = () => (
+  <div className="loading-fallback">
+    <p>Cargando...</p>
+  </div>
+);
 
 const HomePage = () => {
   const featuredProducts = [
@@ -146,6 +157,11 @@ const HomePage = () => {
         </Container>
       </section>
 
+      {/* Galería de Trabajos Recientes - Cargada de forma diferida */}
+      <Suspense fallback={<LoadingFallback />}>
+        <WorkGallery />
+      </Suspense>
+
       {/* Sección de Servicios */}
       <section className="services-section">
         <Container>
@@ -169,6 +185,11 @@ const HomePage = () => {
           </Row>
         </Container>
       </section>
+
+      {/* Sección de Preguntas Frecuentes */}
+      <Suspense fallback={<LoadingFallback />}>
+        <HomeFAQSection />
+      </Suspense>
 
       {/* Sección de CTA */}
       <section className="cta-section">

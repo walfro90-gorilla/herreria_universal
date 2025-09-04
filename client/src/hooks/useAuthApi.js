@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const useAuthApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const apiCall = async (url, options = {}) => {
+  const apiCall = useCallback(async (url, options = {}) => {
     setLoading(true);
     setError(null);
     
@@ -30,29 +30,29 @@ const useAuthApi = () => {
       setLoading(false);
       throw err;
     }
-  };
+  }, []);
 
-  const register = async (userData) => {
+  const register = useCallback(async (userData) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/auth/register`, {
       method: 'POST',
       body: JSON.stringify(userData),
     });
-  };
+  }, [apiCall]);
 
-  const login = async (credentials) => {
+  const login = useCallback(async (credentials) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/auth/login`, {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
-  };
+  }, [apiCall]);
 
-  const getProfile = async (token) => {
+  const getProfile = useCallback(async (token) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/auth/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  };
+  }, [apiCall]);
 
   return {
     loading,

@@ -13,7 +13,7 @@
 - [x] Rediseñar hero section atractiva
 - [x] Crear sección de servicios destacados
 - [x] Añadir testimonios de clientes
-- [ ] Implementar galería de trabajos recientes
+- [x] Implementar galería de trabajos recientes
 - [x] Incluir llamados a la acción claros
 - [x] Hacer visible información de contacto
 
@@ -53,9 +53,9 @@
 - [x] Crear página/sección dedicada a servicios
 - [x] Añadir descripciones detalladas
 - [x] Incluir imágenes representativas
-- [ ] Mostrar precios (si aplica)
-- [ ] Añadir formulario de contacto
-- [ ] Crear sección de preguntas frecuentes
+- [x] Mostrar precios (si aplica)
+- [x] Añadir formulario de contacto
+- [x] Crear sección de preguntas frecuentes
 
 ### 8. Compatibilidad Responsive
 - [x] Asegurar adaptación en móviles (320px+)
@@ -68,7 +68,7 @@
 ## Sugerencias Adicionales
 
 ### Optimización de Rendimiento
-- [ ] Implementar carga diferida (lazy loading)
+- [x] Implementar carga diferida (lazy loading)
 - [ ] Minimizar tamaño de bundles
 - [ ] Añadir metaetiquetas para SEO
 
