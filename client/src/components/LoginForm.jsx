@@ -73,6 +73,9 @@ const LoginForm = () => {
               </Button>
             </form>
             <div className="auth-footer">
+              <p>
+                <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+              </p>
               <p>¿No tienes cuenta? <a href="/register">Regístrate</a></p>
             </div>
           </Card.Body>

@@ -36,7 +36,7 @@
 ### 5. Sistema de Autenticación y Login
 - [x] Crear página de registro de usuarios
 - [x] Crear página de inicio de sesión
-- [ ] Implementar recuperación de contraseña
+- [x] Implementar recuperación de contraseña
 - [x] Implementar autenticación JWT en backend
 - [x] Añadir rutas protegidas
 - [x] Crear componentes de UI para formularios

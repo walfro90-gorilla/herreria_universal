@@ -33,9 +33,10 @@ mongoose.connect(mongoURI)
 // Rutas
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', require('./routes/passwordRoutes'));
+app.use('/api/services', require('./routes/serviceRoutes'));
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin', adminUserRoutes);
-app.use('/api/services', require('./routes/serviceRoutes'));
 app.use('/api/admin/services', require('./routes/serviceRoutes'));
 
 // Ruta principal
