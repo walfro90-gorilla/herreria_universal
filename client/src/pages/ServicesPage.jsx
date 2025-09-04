@@ -1,36 +1,76 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col } from '../ui-components/Grid';
 import Card from '../ui-components/Card';
 import Button from '../ui-components/Button';
 import Container from '../ui-components/Container';
 
 const ServicesPage = () => {
-  const services = [
-    {
-      id: 1,
-      title: 'Fabricación de Puertas',
-      description: 'Puertas principales y de interior de hierro forjado con diseños personalizados.',
-      image: 'https://images.unsplash.com/photo-1534889156217-81c2d90898d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-    },
-    {
-      id: 2,
-      title: 'Rejas Decorativas',
-      description: 'Rejas para ventanas y balcones con patrones florales y geométricos.',
-      image: 'https://images.unsplash.com/photo-1595152872357-6b3f7d4a5f3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-    },
-    {
-      id: 3,
-      title: 'Muebles de Hierro',
-      description: 'Mesas, sillas y otros muebles de hierro forjado para interiores y exteriores.',
-      image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-    },
-    {
-      id: 4,
-      title: 'Restauración',
-      description: 'Restauración de piezas de hierro forjado antiguas y deterioradas.',
-      image: 'https://images.unsplash.com/photo-1591476094392-5d5e0f0d2e1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-    },
-  ];
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    console.log('ServicesPage useEffect mounted');
+    
+    const fetchServices = async () => {
+      try {
+        console.log('Fetching services from:', `${import.meta.env.VITE_API_URL}/services`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/services`);
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Services data:', data);
+        console.log('Setting services state with', data.length, 'items');
+        setServices(data);
+        setLoading(false);
+        console.log('Services state updated');
+      } catch (err) {
+        console.error('Error fetching services:', err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+    
+    // Cleanup function
+    return () => {
+      console.log('ServicesPage useEffect cleanup');
+    };
+  }, []);
+
+  console.log('ServicesPage render - services length:', services.length, 'loading:', loading, 'error:', error);
+
+  if (loading) {
+    console.log('Rendering loading state');
+    return <Container><p>Cargando servicios...</p></Container>;
+  }
+  
+  if (error) {
+    console.log('Rendering error state');
+    return <Container><p>Error: {error}</p></Container>;
+  }
+
+  if (services.length === 0) {
+    console.log('Rendering no services state');
+    return (
+      <Container>
+        <section className="services-header">
+          <h1>Nuestros Servicios</h1>
+          <p className="services-subtitle">
+            Ofrecemos una amplia gama de servicios de herrería artesanal de la más alta calidad
+          </p>
+        </section>
+        <p>No se encontraron servicios disponibles en este momento.</p>
+      </Container>
+    );
+  }
+
+  console.log('Rendering services grid with', services.length, 'items');
 
   return (
     <Container>
@@ -44,14 +84,18 @@ const ServicesPage = () => {
       <section className="services-grid">
         <Row>
           {services.map((service) => (
-            <Col key={service.id} md={6} lg={3}>
+            <Col key={service._id} md={6} lg={3}>
               <Card className="service-card">
-                <div className="service-image">
-                  <img src={service.image} alt={service.title} />
-                </div>
+                {service.image && (
+                  <div className="service-image">
+                    <img src={service.image} alt={service.name} />
+                  </div>
+                )}
                 <Card.Body>
-                  <h3>{service.title}</h3>
+                  <h3>{service.name}</h3>
                   <p>{service.description}</p>
+                  {service.price && <p className="price">Desde ${service.price}</p>}
+                  {service.duration && <p className="duration">Duración: {service.duration}</p>}
                   <Button variant="primary" fullWidth>
                     Más Información
                   </Button>

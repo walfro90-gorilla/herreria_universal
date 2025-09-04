@@ -7,15 +7,15 @@
 - [x] Aplicar principios de diseño moderno
 - [x] Crear layouts flexibles para móviles, tablets y desktops
 - [x] Implementar técnicas de diseño mobile-first
-- [ ] Añadir animaciones y transiciones suaves
+- [x] Añadir animaciones y transiciones suaves
 
 ### 2. Mejoras del Home Page
 - [x] Rediseñar hero section atractiva
 - [x] Crear sección de servicios destacados
-- [ ] Añadir testimonios de clientes
+- [x] Añadir testimonios de clientes
 - [ ] Implementar galería de trabajos recientes
 - [x] Incluir llamados a la acción claros
-- [ ] Hacer visible información de contacto
+- [x] Hacer visible información de contacto
 
 ### 3. Sistema de Navegación Global
 - [x] Crear barra de navegación responsiva
@@ -24,7 +24,7 @@
 - [x] Crear enlaces a secciones clave
 - [x] Añadir indicador de página actual
 - [x] Incluir acceso al panel de administración
-- [ ] Añadir iconos de redes sociales
+- [x] Añadir iconos de redes sociales
 
 ### 4. Estado Global de la Aplicación
 - [x] Implementar Context API o Redux

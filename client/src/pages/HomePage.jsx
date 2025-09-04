@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../ui-components/Button';
 import Card from '../ui-components/Card';
@@ -33,6 +33,38 @@ const HomePage = () => {
       description: 'Restauración de piezas antiguas y deterioradas',
     },
   ];
+
+  const testimonials = [
+    {
+      id: 1,
+      text: 'La puerta que hicieron para nuestra casa es una obra de arte. La atención al detalle es impresionante.',
+      author: 'María González',
+      role: 'Cliente Satisfecha'
+    },
+    {
+      id: 2,
+      text: 'Excelente calidad y servicio. Nos entregaron el proyecto antes de lo acordado y superó nuestras expectativas.',
+      author: 'Carlos Rodríguez',
+      role: 'Arquitecto'
+    },
+    {
+      id: 3,
+      text: 'Hemos contratado sus servicios por años. Siempre cumplen con lo prometido y la calidad es inigualable.',
+      author: 'Ana Martínez',
+      role: 'Cliente Corporativo'
+    }
+  ];
+
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+
+  // Cambiar testimonio automáticamente cada 5 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   return (
     <div className="home-page">
@@ -85,6 +117,35 @@ const HomePage = () => {
         </Container>
       </section>
 
+      {/* Sección de Testimonios */}
+      <section className="testimonials-section">
+        <Container>
+          <h2 className="section-title">Lo Que Dicen Nuestros Clientes</h2>
+          <div className="testimonials-container">
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={testimonial.id} 
+                className="testimonial-card"
+                style={{ display: index === activeTestimonial ? 'block' : 'none' }}
+              >
+                <p className="testimonial-text">"{testimonial.text}"</p>
+                <div className="testimonial-author">{testimonial.author}</div>
+                <div className="testimonial-role">{testimonial.role}</div>
+              </div>
+            ))}
+            <div className="testimonial-indicators">
+              {testimonials.map((_, index) => (
+                <div 
+                  key={index}
+                  className={`testimonial-indicator ${index === activeTestimonial ? 'active' : ''}`}
+                  onClick={() => setActiveTestimonial(index)}
+                />
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* Sección de Servicios */}
       <section className="services-section">
         <Container>
@@ -125,6 +186,33 @@ const HomePage = () => {
               </Link>
             </Card.Body>
           </Card>
+        </Container>
+      </section>
+
+      {/* Sección de Contacto */}
+      <section className="contact-section">
+        <Container>
+          <h2 className="section-title">Contáctanos</h2>
+          <div className="contact-info">
+            <div className="contact-item">
+              <div className="contact-icon">📍</div>
+              <div className="contact-label">Dirección</div>
+              <div className="contact-value">Calle Principal 123, Ciudad</div>
+            </div>
+            <div className="contact-item">
+              <div className="contact-icon">📞</div>
+              <div className="contact-label">Teléfono</div>
+              <div className="contact-value">+123 456 7890</div>
+            </div>
+            <div className="contact-item">
+              <div className="contact-icon">✉️</div>
+              <div className="contact-label">Email</div>
+              <div className="contact-value">info@herreria.com</div>
+            </div>
+          </div>
+          <div className="contact-map">
+            <p>Mapa de ubicación (integración pendiente)</p>
+          </div>
         </Container>
       </section>
     </div>

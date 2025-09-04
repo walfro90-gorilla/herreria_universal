@@ -97,6 +97,19 @@ const Navigation = () => {
               </li>
             )}
           </ul>
+          
+          {/* Iconos de redes sociales */}
+          <div className="social-icons">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <span role="img" aria-label="Facebook">f</span>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <span role="img" aria-label="Instagram">i</span>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <span role="img" aria-label="Twitter">t</span>
+            </a>
+          </div>
         </div>
       </div>
     </nav>

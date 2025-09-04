@@ -45,25 +45,57 @@
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s, background-color 0.25s, color 0.25s;
+  transition: all 0.3s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .btn:hover {
-  border-color: #646cff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .btn:focus,
 .btn:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+  transform: translateY(-1px);
 }
 
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Efecto de onda al hacer clic */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::after {
+  width: 200px;
+  height: 200px;
 }
 
 .btn-full-width {
@@ -135,6 +167,7 @@
 
 .card:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  transform: translateY(-5px);
 }
 
 .card-default {
@@ -312,6 +345,35 @@
   color: white;
 }
 
+/* Iconos de redes sociales */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 1rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: #3498db;
+  transform: translateY(-3px);
+}
+
 /* Estilos responsivos para navegación */
 @media screen and (max-width: 768px) {
   .nav-toggle {
@@ -326,7 +388,7 @@
     background-color: #2c3e50;
     width: 100%;
     text-align: center;
-    transition: 0.3s;
+    transition: left 0.3s ease-in-out;
     box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
     z-index: 99;
   }
@@ -341,12 +403,61 @@
 
   .nav-item {
     margin: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeInDown 0.3s ease forwards;
   }
+
+  .nav-item:nth-child(1) { animation-delay: 0.1s; }
+  .nav-item:nth-child(2) { animation-delay: 0.2s; }
+  .nav-item:nth-child(3) { animation-delay: 0.3s; }
+  .nav-item:nth-child(4) { animation-delay: 0.4s; }
+  .nav-item:nth-child(5) { animation-delay: 0.5s; }
 
   .nav-link {
     display: block;
     padding: 1.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+  }
+}
+
+/* Animaciones */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -361,12 +472,14 @@
   color: white;
   padding: 4rem 0;
   text-align: center;
+  animation: fadeIn 1s ease-out;
 }
 
 .hero-title {
   font-size: 3rem;
   margin-bottom: 1rem;
   color: white;
+  animation: slideInLeft 0.8s ease-out;
 }
 
 .hero-subtitle {
@@ -375,6 +488,7 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  animation: fadeInUp 1s ease-out 0.3s both;
 }
 
 .hero-buttons {
@@ -382,6 +496,7 @@
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
 .section-title {
@@ -389,6 +504,37 @@
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #2c3e50;
+  position: relative;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #3498db;
+  margin: 0.5rem auto;
+  border-radius: 3px;
+  animation: expandWidth 1s ease-out 0.5s both;
+}
+
+@keyframes expandWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 50px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .featured-card,
@@ -422,8 +568,141 @@
   padding: 3rem 0;
 }
 
+/* Sección de Testimonios */
+.testimonials-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+  color: white;
+  text-align: center;
+}
+
+.testimonials-section .section-title {
+  color: white;
+}
+
+.testimonials-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.testimonial-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeInUp 0.8s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.testimonial-card:nth-child(1) { animation-delay: 0.2s; }
+.testimonial-card:nth-child(2) { animation-delay: 0.4s; }
+.testimonial-card:nth-child(3) { animation-delay: 0.6s; }
+
+.testimonial-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.testimonial-author {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.testimonial-role {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+/* Indicadores de testimonios */
+.testimonial-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.testimonial-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.testimonial-indicator.active {
+  background: white;
+  transform: scale(1.2);
+}
+
 .cta-section {
   padding: 3rem 0;
+}
+
+/* Sección de Contacto */
+.contact-section {
+  background-color: #2c3e50;
+  color: white;
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.contact-section .section-title {
+  color: white;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInUp 0.6s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.contact-item:nth-child(1) { animation-delay: 0.1s; }
+.contact-item:nth-child(2) { animation-delay: 0.2s; }
+.contact-item:nth-child(3) { animation-delay: 0.3s; }
+
+.contact-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #3498db;
+}
+
+.contact-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.contact-value {
+  color: #ecf0f1;
+}
+
+/* Mapa de contacto */
+.contact-map {
+  height: 300px;
+  margin: 2rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.8s ease-out 0.4s both;
 }
 
 /* Formularios de Autenticación */
@@ -448,13 +727,23 @@
 
 .form-group {
   margin-bottom: 1rem;
+  animation: fadeInUp 0.5s ease-out;
+  opacity: 0;
+  transform: translateY(10px);
 }
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
 
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
   color: #2c3e50;
+  transition: color 0.3s ease;
 }
 
 .form-control {
@@ -463,14 +752,20 @@
   border: 1px solid #bdc3c7;
   border-radius: 4px;
   font-size: 1rem;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
   box-sizing: border-box;
+  background: #fff;
 }
 
 .form-control:focus {
   outline: none;
   border-color: #3498db;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  transform: scale(1.02);
+}
+
+.form-control:hover {
+  border-color: #3498db;
 }
 
 .alert {
@@ -530,6 +825,57 @@
 .admin-container h1 {
   color: #2c3e50;
   margin-bottom: 1rem;
+}
+
+.admin-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-service-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-service-card h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.admin-service-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Formulario de servicios */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.service-form-card {
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
 }
 
 .admin-header {
@@ -663,22 +1009,45 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .service-image {
   height: 200px;
   overflow: hidden;
+  position: relative;
 }
 
 .service-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
 .service-card:hover .service-image img {
-  transform: scale(1.05);
+  transform: scale(1.1);
+}
+
+.service-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.service-card:hover .service-image::before {
+  opacity: 1;
 }
 
 .service-card h3 {

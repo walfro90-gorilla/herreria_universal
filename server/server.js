@@ -35,6 +35,8 @@ app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin', adminUserRoutes);
+app.use('/api/services', require('./routes/serviceRoutes'));
+app.use('/api/admin/services', require('./routes/serviceRoutes'));
 
 // Ruta principal
 app.get('/', (req, res) => {

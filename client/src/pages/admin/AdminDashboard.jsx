@@ -35,6 +35,11 @@ const AdminDashboard = () => {
       link: '/admin/products'
     },
     {
+      title: 'Gestión de Servicios',
+      description: 'Agregar, editar y eliminar servicios',
+      link: '/admin/services'
+    },
+    {
       title: 'Gestión de Usuarios',
       description: 'Ver y administrar usuarios',
       link: '/admin/users'
