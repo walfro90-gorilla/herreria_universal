@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import useAdminApi from '../../hooks/useAdminApi';
 import Button from '../../ui-components/Button';
@@ -7,8 +7,10 @@ import Container from '../../ui-components/Container';
 
 const AdminProducts = () => {
   const { user } = useAuth();
-  const { getProducts, deleteProduct, loading, error } = useAdminApi();
+  const { getProducts, deleteProduct } = useAdminApi();
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Verificar si el usuario es administrador
   if (!user || user.role !== 'admin') {
@@ -31,20 +33,26 @@ const AdminProducts = () => {
     );
   }
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts(user.token);
-        setProducts(data);
-      } catch (err) {
-        console.error('Error al cargar los productos:', err);
-      }
-    };
-
-    if (user && user.token) {
-      fetchProducts();
+  const fetchProducts = useCallback(async () => {
+    if (!user || !user.token) return;
+    
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const data = await getProducts(user.token);
+      setProducts(data);
+    } catch (err) {
+      console.error('Error al cargar los productos:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   }, [user, getProducts]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleDelete = async (productId) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este producto?')) {

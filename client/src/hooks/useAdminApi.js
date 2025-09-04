@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const useAdminApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const apiCall = async (url, options = {}) => {
+  const apiCall = useCallback(async (url, options = {}) => {
     setLoading(true);
     setError(null);
     
@@ -30,18 +30,18 @@ const useAdminApi = () => {
       setLoading(false);
       throw err;
     }
-  };
+  }, []);
 
   // Productos
-  const getProducts = async (token) => {
+  const getProducts = useCallback(async (token) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/admin/products`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  };
+  }, [apiCall]);
 
-  const createProduct = async (token, productData) => {
+  const createProduct = useCallback(async (token, productData) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/admin/products`, {
       method: 'POST',
       headers: {
@@ -49,9 +49,9 @@ const useAdminApi = () => {
       },
       body: JSON.stringify(productData),
     });
-  };
+  }, [apiCall]);
 
-  const updateProduct = async (token, productId, productData) => {
+  const updateProduct = useCallback(async (token, productId, productData) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/admin/products/${productId}`, {
       method: 'PUT',
       headers: {
@@ -59,34 +59,34 @@ const useAdminApi = () => {
       },
       body: JSON.stringify(productData),
     });
-  };
+  }, [apiCall]);
 
-  const deleteProduct = async (token, productId) => {
+  const deleteProduct = useCallback(async (token, productId) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/admin/products/${productId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  };
+  }, [apiCall]);
 
   // Usuarios
-  const getUsers = async (token) => {
+  const getUsers = useCallback(async (token) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/admin/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  };
+  }, [apiCall]);
 
-  const deleteUser = async (token, userId) => {
+  const deleteUser = useCallback(async (token, userId) => {
     return apiCall(`${import.meta.env.VITE_API_URL}/admin/users/${userId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-  };
+  }, [apiCall]);
 
   return {
     loading,

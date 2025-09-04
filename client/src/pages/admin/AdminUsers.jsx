@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import useAdminApi from '../../hooks/useAdminApi';
 import Button from '../../ui-components/Button';
@@ -7,8 +7,10 @@ import Container from '../../ui-components/Container';
 
 const AdminUsers = () => {
   const { user } = useAuth();
-  const { getUsers, deleteUser, loading, error } = useAdminApi();
+  const { getUsers, deleteUser } = useAdminApi();
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Verificar si el usuario es administrador
   if (!user || user.role !== 'admin') {
@@ -31,20 +33,26 @@ const AdminUsers = () => {
     );
   }
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const data = await getUsers(user.token);
-        setUsers(data);
-      } catch (err) {
-        console.error('Error al cargar los usuarios:', err);
-      }
-    };
-
-    if (user && user.token) {
-      fetchUsers();
+  const fetchUsers = useCallback(async () => {
+    if (!user || !user.token) return;
+    
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const data = await getUsers(user.token);
+      setUsers(data);
+    } catch (err) {
+      console.error('Error al cargar los usuarios:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   }, [user, getUsers]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const handleDelete = async (userId) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este usuario?')) {

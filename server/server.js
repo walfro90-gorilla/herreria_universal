@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config(); // Cargar variables de entorno
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -11,6 +12,12 @@ const port = process.env.PORT || 3000;
 
 // Middleware para parsear JSON
 app.use(express.json());
+
+// Middleware para habilitar CORS
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 
 // Obtener la URI de MongoDB desde variables de entorno o usar la local por defecto
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/herreria';
