@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import Button from '../ui-components/Button';
 import Card from '../ui-components/Card';
 import Container from '../ui-components/Container';
@@ -79,6 +80,11 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
+      <SEO 
+        title="Inicio"
+        description="Herrería Universal - Creando piezas únicas de herrería artesanal con más de 20 años de experiencia. Especialistas en fabricación, restauración y diseño personalizado de hierro forjado."
+        keywords="herrería, hierro forjado, fabricación, restauración, diseño personalizado, puertas, rejas, muebles"
+      />
       {/* Hero Section */}
       <section className="hero">
         <Container>

@@ -70,7 +70,7 @@
 ### Optimización de Rendimiento
 - [x] Implementar carga diferida (lazy loading)
 - [ ] Minimizar tamaño de bundles
-- [ ] Añadir metaetiquetas para SEO
+- [x] Añadir metaetiquetas para SEO
 
 ### Accesibilidad
 - [ ] Añadir atributos ARIA

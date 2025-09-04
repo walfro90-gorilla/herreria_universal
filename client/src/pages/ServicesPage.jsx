@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from '../ui-components/Grid';
+import SEO from '../components/SEO';
 import Card from '../ui-components/Card';
 import Button from '../ui-components/Button';
 import Container from '../ui-components/Container';
@@ -39,6 +40,12 @@ const ServicesPage = () => {
   if (services.length === 0) {
     return (
       <Container>
+        <SEO 
+          title="Servicios"
+          description="Descubre nuestros servicios de herrería artesanal. Fabricación, restauración, mantenimiento y diseño personalizado de piezas de hierro forjado."
+          keywords="servicios herrería, fabricación hierro forjado, restauración hierro, mantenimiento hierro, diseño personalizado"
+        />
+        
         <section className="services-header">
           <h1>Nuestros Servicios</h1>
           <p className="services-subtitle">
@@ -52,6 +59,12 @@ const ServicesPage = () => {
 
   return (
     <div>
+      <SEO 
+        title="Servicios"
+        description="Descubre nuestros servicios de herrería artesanal. Fabricación, restauración, mantenimiento y diseño personalizado de piezas de hierro forjado."
+        keywords="servicios herrería, fabricación hierro forjado, restauración hierro, mantenimiento hierro, diseño personalizado"
+      />
+      
       <Container>
         <section className="services-header">
           <h1>Nuestros Servicios</h1>

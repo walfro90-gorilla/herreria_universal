@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import useAuthApi from '../hooks/useAuthApi';
+import SEO from '../components/SEO';
 import Button from '../ui-components/Button';
 import Card from '../ui-components/Card';
 import Container from '../ui-components/Container';
@@ -36,6 +37,11 @@ const ProfilePage = () => {
   if (!user) {
     return (
       <Container>
+        <SEO 
+          title="Acceso Denegado"
+          description="Debes iniciar sesión para acceder a tu perfil de usuario."
+        />
+        
         <div className="profile-container">
           <Card>
             <Card.Body>
@@ -55,6 +61,11 @@ const ProfilePage = () => {
 
   return (
     <Container>
+      <SEO 
+        title="Perfil de Usuario"
+        description="Gestiona tu perfil de usuario y configura tus preferencias personales."
+      />
+      
       <div className="profile-container">
         <Card>
           <Card.Body>
