@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config(); // Cargar variables de entorno
 const productRoutes = require('./routes/productRoutes');
+const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/admin/adminRoutes');
+const adminUserRoutes = require('./routes/admin/userRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,7 +24,10 @@ mongoose.connect(mongoURI)
   });
 
 // Rutas
-app.use('/api', productRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/admin', adminUserRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import '../App.css';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -14,12 +16,40 @@ const Navigation = () => {
     setIsMenuOpen(false);
   };
 
-  const navItems = [
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+  };
+
+  // Items de navegación para usuarios no autenticados
+  const guestNavItems = [
     { name: 'Inicio', path: '/' },
     { name: 'Productos', path: '/products' },
     { name: 'Servicios', path: '/services' },
-    { name: 'Contacto', path: '/contact' },
+    { name: 'Iniciar Sesión', path: '/login' },
+    { name: 'Registrarse', path: '/register' },
   ];
+
+  // Items de navegación para usuarios autenticados
+  const userNavItems = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Productos', path: '/products' },
+    { name: 'Servicios', path: '/services' },
+    { name: 'Mi Perfil', path: '/profile' },
+  ];
+
+  // Items adicionales para administradores
+  const adminNavItems = [
+    { name: 'Panel Admin', path: '/admin' },
+  ];
+
+  // Determinar qué items mostrar según el estado de autenticación
+  let navItems = user ? userNavItems : guestNavItems;
+  
+  // Agregar items de admin si el usuario es administrador
+  if (user && user.role === 'admin') {
+    navItems = [...userNavItems, ...adminNavItems];
+  }
 
   return (
     <nav className="navigation">
@@ -54,6 +84,18 @@ const Navigation = () => {
                 </Link>
               </li>
             ))}
+            
+            {/* Botón de logout para usuarios autenticados */}
+            {user && (
+              <li className="nav-item">
+                <button 
+                  onClick={handleLogout}
+                  className="nav-link nav-link-button"
+                >
+                  Cerrar Sesión
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
