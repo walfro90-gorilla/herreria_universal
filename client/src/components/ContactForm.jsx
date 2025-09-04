@@ -56,28 +56,28 @@ const ContactForm = () => {
   };
 
   return (
-    <section className="contact-form-section">
+    <section className="contact-form-section" aria-labelledby="contact-form-title">
       <Container>
         <Card className="contact-form-card">
           <Card.Body>
-            <h2 className="contact-form-title">Solicita una Cotización</h2>
+            <h2 id="contact-form-title" className="contact-form-title">Solicita una Cotización</h2>
             <p className="contact-form-subtitle">
               ¿Interesado en alguno de nuestros servicios? Contáctanos para obtener una cotización personalizada.
             </p>
             
             {submitSuccess && (
-              <div className="alert alert-success">
+              <div className="alert alert-success" role="alert" aria-live="polite">
                 ¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.
               </div>
             )}
             
             {submitError && (
-              <div className="alert alert-error">
+              <div className="alert alert-error" role="alert" aria-live="assertive">
                 {submitError}
               </div>
             )}
             
-            <form onSubmit={handleSubmit} className="contact-form">
+            <form onSubmit={handleSubmit} className="contact-form" aria-describedby="form-help">
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="name">Nombre completo *</label>
@@ -90,6 +90,7 @@ const ContactForm = () => {
                     required
                     className="form-control"
                     placeholder="Tu nombre completo"
+                    aria-required="true"
                   />
                 </div>
                 
@@ -104,6 +105,7 @@ const ContactForm = () => {
                     required
                     className="form-control"
                     placeholder="tu@email.com"
+                    aria-required="true"
                   />
                 </div>
               </div>
@@ -153,6 +155,7 @@ const ContactForm = () => {
                   className="form-control"
                   rows="4"
                   placeholder="Cuéntanos sobre tu proyecto, necesidades específicas, etc."
+                  aria-required="true"
                 />
               </div>
               
@@ -163,6 +166,7 @@ const ContactForm = () => {
                   size="lg" 
                   disabled={isSubmitting}
                   fullWidth
+                  aria-busy={isSubmitting}
                 >
                   {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
                 </Button>

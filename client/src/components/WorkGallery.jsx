@@ -62,18 +62,29 @@ const WorkGallery = () => {
   };
 
   return (
-    <section className="work-gallery-section">
+    <section className="work-gallery-section" aria-labelledby="gallery-title">
       <Container>
-        <h2 className="section-title">Nuestros Trabajos Recientes</h2>
+        <h2 id="gallery-title" className="section-title">Nuestros Trabajos Recientes</h2>
         <p className="section-subtitle">
           Descubre algunos de nuestros proyectos más recientes y la calidad de nuestro trabajo artesanal
         </p>
         
-        <div className="work-gallery-grid">
+        <div className="work-gallery-grid" role="list">
           <Row>
             {works.map((work) => (
-              <Col key={work.id} md={6} lg={4}>
-                <Card className="work-card" onClick={() => openModal(work)}>
+              <Col key={work.id} md={6} lg={4} role="listitem">
+                <Card 
+                  className="work-card" 
+                  onClick={() => openModal(work)}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      openModal(work);
+                    }
+                  }}
+                  role="button"
+                  aria-label={`Ver detalles de ${work.title}`}
+                >
                   <div className="work-image">
                     <img src={work.image} alt={work.title} />
                     <div className="work-overlay">
@@ -91,7 +102,7 @@ const WorkGallery = () => {
         </div>
         
         <div className="work-gallery-cta">
-          <Button variant="primary" size="lg">
+          <Button variant="primary" size="lg" aria-label="Ver todos nuestros trabajos">
             Ver Todos Nuestros Trabajos
           </Button>
         </div>
@@ -99,18 +110,32 @@ const WorkGallery = () => {
       
       {/* Modal para mostrar detalles del trabajo */}
       {selectedWork && (
-        <div className="work-modal-overlay" onClick={closeModal}>
+        <div 
+          className="work-modal-overlay" 
+          onClick={closeModal}
+          role="dialog"
+          aria-labelledby="modal-title"
+          aria-modal="true"
+        >
           <div className="work-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="work-modal-close" onClick={closeModal}>×</button>
+            <button 
+              className="work-modal-close" 
+              onClick={closeModal}
+              aria-label="Cerrar ventana modal"
+            >
+              ×
+            </button>
             <div className="work-modal-content">
               <div className="work-modal-image">
                 <img src={selectedWork.image} alt={selectedWork.title} />
               </div>
               <div className="work-modal-info">
-                <h2>{selectedWork.title}</h2>
+                <h2 id="modal-title">{selectedWork.title}</h2>
                 <div className="work-modal-category">{selectedWork.category}</div>
                 <p>{selectedWork.description}</p>
-                <Button variant="primary">Solicitar Presupuesto</Button>
+                <Button variant="primary" aria-label={`Solicitar presupuesto para ${selectedWork.title}`}>
+                  Solicitar Presupuesto
+                </Button>
               </div>
             </div>
           </div>

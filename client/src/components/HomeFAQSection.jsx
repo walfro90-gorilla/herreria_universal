@@ -27,31 +27,46 @@ const HomeFAQSection = () => {
   };
 
   return (
-    <section className="faq-section">
+    <section className="faq-section" aria-labelledby="faq-home-title">
       <Container>
-        <h2 className="section-title">Preguntas Frecuentes</h2>
+        <h2 id="faq-home-title" className="section-title">Preguntas Frecuentes</h2>
         <p className="section-subtitle">
           Encuentra respuestas rápidas a las preguntas más comunes
         </p>
         
-        <div className="faq-container">
+        <div className="faq-container" role="list">
           {faqs.map((faq, index) => (
             <Card 
               key={index} 
               className={`faq-card ${activeIndex === index ? 'faq-card-active' : ''}`}
+              role="listitem"
             >
               <Card.Body>
                 <div 
                   className="faq-question" 
                   onClick={() => toggleFAQ(index)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      toggleFAQ(index);
+                    }
+                  }}
+                  tabIndex="0"
+                  role="button"
+                  aria-expanded={activeIndex === index}
+                  aria-controls={`faq-answer-${index}`}
                 >
                   <h3>{faq.question}</h3>
-                  <span className="faq-toggle">
+                  <span className="faq-toggle" aria-hidden="true">
                     {activeIndex === index ? '−' : '+'}
                   </span>
                 </div>
                 {activeIndex === index && (
-                  <div className="faq-answer">
+                  <div 
+                    id={`faq-answer-${index}`}
+                    className="faq-answer"
+                    role="region"
+                    aria-labelledby={`faq-question-${index}`}
+                  >
                     <p>{faq.answer}</p>
                   </div>
                 )}
@@ -67,7 +82,13 @@ const HomeFAQSection = () => {
               <p>
                 Visita nuestra sección completa de preguntas frecuentes.
               </p>
-              <Button variant="accent" size="lg" as="a" href="/services#faq">
+              <Button 
+                variant="accent" 
+                size="lg" 
+                as="a" 
+                href="/services#faq"
+                aria-label="Ver todas las preguntas frecuentes en la página de servicios"
+              >
                 Ver Todas las Preguntas
               </Button>
             </Card.Body>

@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import FontLoader from './components/FontLoader';
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
@@ -27,10 +28,14 @@ const LoadingFallback = () => (
   </div>
 );
 
+// Páginas principales
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+
 function App() {
   return (
     <HelmetProvider>
       <Router>
+        <FontLoader />
         <div className="App">
           <header>
             <h1>Herrería Universal</h1>
@@ -42,6 +47,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/services" element={<ServicesPage />} />
+                <Route path="/contact" element={<ContactPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />

@@ -45,6 +45,7 @@ const Button = ({
       } ${disabled ? 'btn-disabled' : ''}`}
       onClick={onClick}
       disabled={disabled}
+      aria-disabled={disabled}
       {...props}
     >
       {children}

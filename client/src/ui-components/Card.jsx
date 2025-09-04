@@ -15,7 +15,12 @@ const Card = ({ children, variant = 'default', className = '', ...props }) => {
   };
 
   return (
-    <div className={`card ${getVariantClass()} ${className}`} {...props}>
+    <div 
+      className={`card ${getVariantClass()} ${className}`} 
+      {...props}
+      role="region"
+      aria-label={props['aria-label'] || "Tarjeta de contenido"}
+    >
       {children}
     </div>
   );

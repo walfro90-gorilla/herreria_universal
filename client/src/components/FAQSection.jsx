@@ -9,11 +9,27 @@ const FAQSection = () => {
   const faqs = [
     {
       question: "¿Cuánto tiempo tardan en completar un proyecto?",
-      answer: "El tiempo de entrega varía según la complejidad del proyecto. Los proyectos simples pueden completarse en 2-3 semanas, mientras que los más complejos pueden tomar de 1 a 3 meses."
+      answer: "El tiempo de entrega varía según la complejidad del proyecto. Los proyectos simples pueden completarse en 2-3 semanas, mientras que los más complejos pueden tomar de 1 a 3 meses. Siempre proporcionamos un cronograma detallado antes de comenzar cualquier trabajo."
     },
     {
       question: "¿Ofrecen garantía en sus trabajos?",
-      answer: "Sí, ofrecemos una garantía de 2 años en todos nuestros trabajos de fabricación y restauración."
+      answer: "Sí, ofrecemos una garantía de 2 años en todos nuestros trabajos de fabricación y restauración. Esta garantía cubre defectos en materiales y mano de obra. Los términos específicos se detallan en el contrato de cada proyecto."
+    },
+    {
+      question: "¿Pueden trabajar con diseños personalizados?",
+      answer: "¡Absolutamente! La mayoría de nuestros proyectos son personalizados. Trabajamos estrechamente con nuestros clientes para crear piezas únicas que se adapten perfectamente a sus necesidades, espacio y estilo. Proporcionamos bocetos y renders 3D antes de comenzar la fabricación."
+    },
+    {
+      question: "¿Qué mantenimiento requieren las piezas de hierro forjado?",
+      answer: "Las piezas de hierro forjado requieren mantenimiento mínimo. Recomendamos inspeccionarlas anualmente y aplicar una capa de protector anticorrosivo cada 3-5 años, dependiendo de las condiciones ambientales. Para piezas expuestas a la intemperie, puede ser necesario un mantenimiento más frecuente."
+    },
+    {
+      question: "¿Trabajan en proyectos comerciales e industriales?",
+      answer: "Sí, además de nuestros trabajos residenciales, tenemos amplia experiencia en proyectos comerciales e industriales. Hemos trabajado en restaurantes, hoteles, oficinas y espacios industriales. Cumplimos con todos los códigos y regulaciones aplicables."
+    },
+    {
+      question: "¿Cómo se determina el costo de un proyecto?",
+      answer: "El costo se basa en varios factores: complejidad del diseño, cantidad de material requerido, tiempo de mano de obra, acabados especiales y plazos de entrega. Proporcionamos cotizaciones detalladas y escritas sin cargo. El pago generalmente se estructura en un depósito inicial y pagos por hitos."
     }
   ];
 
@@ -21,80 +37,72 @@ const FAQSection = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  console.log('FAQSection is rendering'); // Mensaje de depuración
-
   return (
-    <div style={{ padding: '3rem 0', backgroundColor: '#f8f9fa' }}>
+    <section className="faq-section" aria-labelledby="faq-title">
       <Container>
-        <h2 style={{ textAlign: 'center', marginBottom: '1rem', color: '#2c3e50' }}>
-          Preguntas Frecuentes
-        </h2>
-        <p style={{ textAlign: 'center', color: '#7f8c8d', marginBottom: '2rem' }}>
-          Encuentra respuestas a las preguntas más comunes
+        <h2 id="faq-title" className="section-title">Preguntas Frecuentes</h2>
+        <p className="section-subtitle">
+          Encuentra respuestas a las preguntas más comunes sobre nuestros servicios
         </p>
         
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div className="faq-container" role="list">
           {faqs.map((faq, index) => (
             <Card 
               key={index} 
-              style={{ 
-                marginBottom: '1rem', 
-                border: '1px solid #ecf0f1',
-                cursor: 'pointer'
-              }}
+              className={`faq-card ${activeIndex === index ? 'faq-card-active' : ''}`}
+              role="listitem"
             >
               <Card.Body>
                 <div 
-                  style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center', 
-                    padding: '1.5rem' 
-                  }} 
+                  className="faq-question" 
                   onClick={() => toggleFAQ(index)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      toggleFAQ(index);
+                    }
+                  }}
+                  tabIndex="0"
+                  role="button"
+                  aria-expanded={activeIndex === index}
+                  aria-controls={`faq-answer-${index}`}
                 >
-                  <h3 style={{ margin: 0, color: '#2c3e50' }}>{faq.question}</h3>
-                  <span style={{ 
-                    fontSize: '1.5rem', 
-                    fontWeight: 'bold', 
-                    color: '#3498db',
-                    width: '30px',
-                    height: '30px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
+                  <h3 id={`faq-question-${index}`}>{faq.question}</h3>
+                  <span className="faq-toggle" aria-hidden="true">
                     {activeIndex === index ? '−' : '+'}
                   </span>
                 </div>
-                {activeIndex === index && (
-                  <div style={{ padding: '0 1.5rem 1.5rem 1.5rem', borderTop: '1px solid #ecf0f1' }}>
-                    <p style={{ margin: 0, color: '#7f8c8d' }}>{faq.answer}</p>
-                  </div>
-                )}
+                <div 
+                  id={`faq-answer-${index}`}
+                  className={`faq-answer ${activeIndex === index ? 'faq-answer-show' : ''}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${index}`}
+                >
+                  <p>{faq.answer}</p>
+                </div>
               </Card.Body>
             </Card>
           ))}
         </div>
         
-        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-          <Card style={{ 
-            background: 'linear-gradient(135deg, #2c3e50, #3498db)', 
-            color: 'white' 
-          }}>
+        <div className="faq-cta">
+          <Card className="cta-card">
             <Card.Body>
-              <h3 style={{ marginTop: 0, color: 'white' }}>¿Tienes otras preguntas?</h3>
-              <p style={{ color: '#ecf0f1', marginBottom: '1.5rem' }}>
-                No dudes en contactarnos para obtener más información.
+              <h3>¿Tienes otras preguntas?</h3>
+              <p>
+                No dudes en contactarnos para obtener más información sobre nuestros servicios.
               </p>
-              <Button variant="accent" size="lg">
+              <Button 
+                variant="accent" 
+                size="lg"
+                aria-label="Ir al formulario de contacto"
+              >
                 Contáctanos
               </Button>
             </Card.Body>
           </Card>
         </div>
       </Container>
-    </div>
+    </section>
   );
 };
 
